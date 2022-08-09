@@ -32,3 +32,8 @@ func (uc *cakeUseCase) PostNewCake(input cakes.Core) (row int, err error) {
 	row, err = uc.cakeData.AddNewCake(input)
 	return row, err
 }
+
+func (uc *cakeUseCase) PatchCake(idCake int, data cakes.Core) (row int, err error) {
+	row, err = uc.cakeData.UpdateCake(idCake, data)
+	return row, err
+}
