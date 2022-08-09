@@ -34,6 +34,9 @@ func (uc *cakeUseCase) PostNewCake(input cakes.Core) (row int, err error) {
 }
 
 func (uc *cakeUseCase) PatchCake(idCake int, data cakes.Core) (row int, err error) {
+	if data.Title == "" || data.Description == "" || data.Rating == 0 || data.Image == "" {
+		return -1, fmt.Errorf("input must be filled")
+	}
 	row, err = uc.cakeData.UpdateCake(idCake, data)
 	return row, err
 }

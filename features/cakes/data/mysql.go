@@ -22,7 +22,7 @@ func (repo *mysqlCakeRepository) DetailOfCake(idCake int) (cakes.Core, error) {
 	err := result.Scan(&Cake.ID, &Cake.Title, &Cake.Description, &Cake.Rating, &Cake.Image, &Cake.CreatedAt, &Cake.UpdatedAt)
 
 	if err != nil {
-		panic(err)
+		return cakes.Core{}, err
 	}
 	return Cake.toCore(), nil
 }
