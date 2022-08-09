@@ -1,6 +1,7 @@
 package business
 
 import (
+	"fmt"
 	cakes "xsis/test/features/cakes"
 )
 
@@ -22,4 +23,12 @@ func (uc *cakeUseCase) GetCakeDetail(idCake int) (resp cakes.Core, err error) {
 func (uc *cakeUseCase) GetAllCake() (data []cakes.Core, err error) {
 	data, err = uc.cakeData.ListOfCake()
 	return data, err
+}
+
+func (uc *cakeUseCase) PostNewCake(input cakes.Core) (row int, err error) {
+	if input.Title == "" || input.Description == "" || input.Rating == 0 || input.Image == "" {
+		return -1, fmt.Errorf("all input must be filled")
+	}
+	row, err = uc.cakeData.AddNewCake(input)
+	return row, err
 }

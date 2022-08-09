@@ -44,3 +44,20 @@ func (repo *mysqlCakeRepository) ListOfCake() ([]cakes.Core, error) {
 	}
 	return toCoreList(listCake), nil
 }
+
+func (repo *mysqlCakeRepository) AddNewCake(input cakes.Core) (int, error) {
+	var query = ("INSERT INTO cakes(title, description, rating, image) VALUES(?,?,?,?)")
+	tx, errTx := repo.db.Prepare(query)
+	if errTx != nil {
+		return 0, errTx
+	}
+
+	result, err := tx.Exec(input.Title, input.Description, input.Rating, input.Image)
+
+	if err != nil {
+		return 0, err
+	} else {
+		row, _ := result.RowsAffected()
+		return int(row), nil
+	}
+}
