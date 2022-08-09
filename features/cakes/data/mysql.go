@@ -28,7 +28,7 @@ func (repo *mysqlCakeRepository) DetailOfCake(idCake int) (cakes.Core, error) {
 }
 
 func (repo *mysqlCakeRepository) ListOfCake() ([]cakes.Core, error) {
-	results, err := repo.db.Query("SELECT id, title, description, rating, image, created_at, updated_at FROM cakes")
+	results, err := repo.db.Query("SELECT id, title, description, rating, image, created_at, updated_at FROM cakes ORDER BY rating DESC, title ASC")
 	if err != nil {
 		return nil, err
 	}
