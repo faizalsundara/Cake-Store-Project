@@ -31,7 +31,7 @@ Cake Store Project terdiri dari beberapa fitur, yaitu user dapat menambahkan lis
 <div>
   
 | Feature Cake | Endpoint | Param | Fungsi |
-| --- | --- | --- | --- | --- |
+| --- | --- | --- | --- |
 | POST | /cakes  | - | Menambahkan produk cake |
 | GET | /cakes | - | Mendapatkan informasi seluruh list produk cake |
 | GET | /cakes/:id | id | Mendapatkan informasi detail dari suatu produk cake |
