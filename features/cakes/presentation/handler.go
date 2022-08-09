@@ -81,3 +81,15 @@ func (h *CakeHandler) UpdateCake(c echo.Context) error {
 
 	return c.JSON(http.StatusOK, helper.ResponseSuccesNoData("success to update data"))
 }
+
+func (h *CakeHandler) DeleteCake(c echo.Context) error {
+	idCake := c.Param("id")
+	idCakeInt, _ := strconv.Atoi(idCake)
+
+	row, _ := h.cakeBusiness.DeleteCake(idCakeInt)
+
+	if row == 1 {
+		return c.JSON(http.StatusInternalServerError, helper.ResponseFailed("failed to delete data"))
+	}
+	return c.JSON(http.StatusOK, helper.ResponseSuccesNoData("success to delete data"))
+}
