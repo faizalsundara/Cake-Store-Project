@@ -26,7 +26,7 @@ func (h *CakeHandler) GetCakeDetail(c echo.Context) error {
 	idCk, _ := strconv.Atoi(idCake)
 	result, err := h.cakeBusiness.GetCakeDetail(idCk)
 	if err != nil {
-		return c.JSON(http.StatusInternalServerError, helper.ResponseFailed("failed to get data"))
+		return c.JSON(http.StatusBadRequest, helper.ResponseFailed("failed to get data"))
 	}
 	return c.JSON(http.StatusOK, helper.ResponseSuccesWithData("success to get data", _responseCake.FromCore(result)))
 }
@@ -71,8 +71,8 @@ func (h *CakeHandler) UpdateCake(c echo.Context) error {
 
 	inputData := _requestCake.ToCore(dataCake)
 	tx, err := h.cakeBusiness.PatchCake(idCakeInt, inputData)
-	if tx != 1 {
-		return c.JSON(http.StatusBadRequest, helper.ResponseFailed("failed to update data"))
+	if tx == -1 {
+		return c.JSON(http.StatusBadRequest, helper.ResponseFailed(err.Error()))
 	}
 
 	if err != nil {
