@@ -4,6 +4,7 @@ import (
 	"net/http"
 	"strconv"
 	cakes "xsis/test/features/cakes"
+	_requestCake "xsis/test/features/cakes/presentation/request"
 	_responseCake "xsis/test/features/cakes/presentation/response"
 	"xsis/test/helper"
 
@@ -36,4 +37,25 @@ func (h *CakeHandler) GetAllCake(c echo.Context) error {
 		return c.JSON(http.StatusInternalServerError, helper.ResponseFailed("failed to get data"))
 	}
 	return c.JSON(http.StatusOK, helper.ResponseSuccesWithData("success to get data", _responseCake.FromCoreList(result)))
+}
+
+func (h *CakeHandler) AddNewCake(c echo.Context) error {
+	var dataCake _requestCake.Cake
+	errBind := c.Bind(&dataCake)
+	if errBind != nil {
+		return c.JSON(http.StatusBadRequest, helper.ResponseFailed("failed to bind data, check your input"))
+	}
+
+	inputData := _requestCake.ToCore(dataCake)
+	tx, err := h.cakeBusiness.PostNewCake(inputData)
+
+	if tx == -1 {
+		return c.JSON(http.StatusBadRequest, helper.ResponseFailed(err.Error()))
+	}
+
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, helper.ResponseFailed("failed to input data"))
+	}
+
+	return c.JSON(http.StatusOK, helper.ResponseSuccesNoData("success to insert data"))
 }
