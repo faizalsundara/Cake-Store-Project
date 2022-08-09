@@ -59,3 +59,25 @@ func (h *CakeHandler) AddNewCake(c echo.Context) error {
 
 	return c.JSON(http.StatusOK, helper.ResponseSuccesNoData("success to insert data"))
 }
+
+func (h *CakeHandler) UpdateCake(c echo.Context) error {
+	var dataCake _requestCake.Cake
+	idCake := c.Param("id")
+	idCakeInt, _ := strconv.Atoi(idCake)
+	errBind := c.Bind(&dataCake)
+	if errBind != nil {
+		return c.JSON(http.StatusBadRequest, helper.ResponseFailed("failed to bind data, check your input"))
+	}
+
+	inputData := _requestCake.ToCore(dataCake)
+	tx, err := h.cakeBusiness.PatchCake(idCakeInt, inputData)
+	if tx != 1 {
+		return c.JSON(http.StatusBadRequest, helper.ResponseFailed("failed to update data"))
+	}
+
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, helper.ResponseFailed("failed to update data"))
+	}
+
+	return c.JSON(http.StatusOK, helper.ResponseSuccesNoData("success to update data"))
+}
