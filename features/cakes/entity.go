@@ -13,11 +13,11 @@ type Core struct {
 }
 
 type Business interface {
-	// GetAllCake(limit, offset int) (data []Core, totalPage int, err error)
+	GetAllCake() (data []Core, err error)
 	GetCakeDetail(idCake int) (data Core, err error)
 }
 
 type Data interface {
-	// ListOfCake(limit, offset int) (data []Core, err error)
+	ListOfCake() (data []Core, err error)
 	DetailOfCake(idCake int) (data Core, err error)
 }
