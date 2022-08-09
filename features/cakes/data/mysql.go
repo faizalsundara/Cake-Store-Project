@@ -16,8 +16,7 @@ func NewCakeRepository(conn *sql.DB) cakes.Data {
 }
 
 func (repo *mysqlCakeRepository) DetailOfCake(idCake int) (cakes.Core, error) {
-	query := ("SELECT id, title, description, rating, image, created_at, updated_at FROM cakes WHERE id = ?")
-	result := repo.db.QueryRow(query, idCake)
+	result := repo.db.QueryRow("SELECT id, title, description, rating, image, created_at, updated_at FROM cakes WHERE id = ?", idCake)
 
 	var Cake Cake
 	err := result.Scan(&Cake.ID, &Cake.Title, &Cake.Description, &Cake.Rating, &Cake.Image, &Cake.CreatedAt, &Cake.UpdatedAt)
