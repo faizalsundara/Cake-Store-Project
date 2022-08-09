@@ -13,6 +13,7 @@ func New(presenter factory.Presenter) *echo.Echo {
 	e.GET("cakes", presenter.CakePresenter.GetAllCake)
 	e.POST("cakes", presenter.CakePresenter.AddNewCake)
 	e.PATCH("cakes/:id", presenter.CakePresenter.UpdateCake)
+	e.DELETE("cakes/:id", presenter.CakePresenter.DeleteCake)
 
 	return e
 }

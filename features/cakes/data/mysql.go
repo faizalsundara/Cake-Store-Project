@@ -78,3 +78,21 @@ func (repo *mysqlCakeRepository) UpdateCake(idCake int, input cakes.Core) (int, 
 		return int(row), nil
 	}
 }
+
+func (repo *mysqlCakeRepository) DeleteCake(idCake int) (int, error) {
+	var query = ("DELETE FROM cakes WHERE id = ?")
+	tx, errTx := repo.db.Prepare(query)
+	if errTx != nil {
+		return 0, errTx
+	}
+
+	result := tx.QueryRow(idCake)
+
+	var id int
+	err := result.Scan(&id)
+	if err != nil {
+		return 0, err
+	} else {
+		return 1, nil
+	}
+}

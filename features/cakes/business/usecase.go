@@ -37,3 +37,8 @@ func (uc *cakeUseCase) PatchCake(idCake int, data cakes.Core) (row int, err erro
 	row, err = uc.cakeData.UpdateCake(idCake, data)
 	return row, err
 }
+
+func (uc *cakeUseCase) DeleteCake(idCake int) (row int, err error) {
+	row, err = uc.cakeData.DeleteCake(idCake)
+	return row, err
+}
