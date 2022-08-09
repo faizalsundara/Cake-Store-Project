@@ -29,3 +29,11 @@ func (h *CakeHandler) GetCakeDetail(c echo.Context) error {
 	}
 	return c.JSON(http.StatusOK, helper.ResponseSuccesWithData("success to get data", _responseCake.FromCore(result)))
 }
+
+func (h *CakeHandler) GetAllCake(c echo.Context) error {
+	result, err := h.cakeBusiness.GetAllCake()
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, helper.ResponseFailed("failed to get data"))
+	}
+	return c.JSON(http.StatusOK, helper.ResponseSuccesWithData("success to get data", _responseCake.FromCoreList(result)))
+}
