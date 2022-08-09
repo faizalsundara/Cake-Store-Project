@@ -3,6 +3,7 @@ package presentation
 import (
 	"net/http"
 	"strconv"
+	"time"
 	cakes "xsis/test/features/cakes"
 	_requestCake "xsis/test/features/cakes/presentation/request"
 	_responseCake "xsis/test/features/cakes/presentation/response"
@@ -61,7 +62,9 @@ func (h *CakeHandler) AddNewCake(c echo.Context) error {
 }
 
 func (h *CakeHandler) UpdateCake(c echo.Context) error {
-	var dataCake _requestCake.Cake
+	var dataCake = _requestCake.Cake{
+		UpdatedAt: time.Now(),
+	}
 	idCake := c.Param("id")
 	idCakeInt, _ := strconv.Atoi(idCake)
 	errBind := c.Bind(&dataCake)

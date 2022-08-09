@@ -63,13 +63,13 @@ func (repo *mysqlCakeRepository) AddNewCake(input cakes.Core) (int, error) {
 }
 
 func (repo *mysqlCakeRepository) UpdateCake(idCake int, input cakes.Core) (int, error) {
-	var query = ("UPDATE cakes SET title = (?), description = (?), rating = (?), image = (?) WHERE id = ?")
+	var query = ("UPDATE cakes SET title = (?), description = (?), rating = (?), image = (?), updated_at = (?) WHERE id = ?")
 	tx, err := repo.db.Prepare(query)
 	if err != nil {
 		return 0, err
 	}
 
-	result, err := tx.Exec(input.Title, input.Description, input.Rating, input.Image, idCake)
+	result, err := tx.Exec(input.Title, input.Description, input.Rating, input.Image, input.UpdatedAt, idCake)
 
 	if err != nil {
 		return 0, err
